@@ -27,7 +27,7 @@ RUN set -xe; \
 RUN addgroup iptvboss \
     && adduser --home /home/iptvboss --gid 1000 --shell /bin/bash iptvboss \
     && echo "iptvboss:iptvboss" | /usr/sbin/chpasswd \
-    && echo "iptvboss ALL=NOPASSWD: ALL" >> /etc/sudoers
+    && echo "iptvboss ALL=NOPASSWD: ALL" >> /etc/sudoers \
     && adduser iptvboss crontab
 
 USER iptvboss
