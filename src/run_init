@@ -4,11 +4,12 @@ set -xe
 
 source /etc/profile
 
+rm -rf /tmp/.X*
 mkdir -p "$HOME/.x11vnc"
 
 wget -qO /app/iptvboss.jar "https://www.dropbox.com/s/xlr6qqjzaihqq30/IPTVBoss.jar?dl=1"
 
-if [ ! -d /opt/jdk-15.0.1 ]; then
+if [ ! -d /opt/jdk-15.0.1-full ]; then
   sudo wget -qO- "https://download.bell-sw.com/java/15.0.1+9/bellsoft-jdk15.0.1+9-linux-aarch64-full.tar.gz" | sudo tar xz -C /opt
 fi
 if [ ! -f /app/config.yaml ]; then
