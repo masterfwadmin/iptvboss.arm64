@@ -1,0 +1,31 @@
+#!/bin/bash
+
+set -xe
+
+source /etc/profile
+
+mkdir -p "$HOME/.x11vnc"
+
+wget -qO /app/iptvboss.jar "https://www.dropbox.com/s/xlr6qqjzaihqq30/IPTVBoss.jar?dl=1"
+
+if [ ! -d /opt/jdk-15.0.1 ]; then
+  sudo wget -qO- "https://download.bell-sw.com/java/15.0.1+9/bellsoft-jdk15.0.1+9-linux-aarch64-full.tar.gz" | sudo tar xz -C /opt
+fi
+if [ ! -f /app/config.yaml ]; then
+  echo "sceneHeight: 936.0" > /app/config.yaml
+  echo "sceneWidth: 1270.0" >> /app/config.yaml
+fi
+if [ ! -f $HOME/appinit.sh ]; then
+  echo "#!/bin/bash" > $HOME/appinit.sh
+  echo "export DISPLAY=:0" >> $HOME/appinit.sh
+  echo "killall java" >> $HOME/appinit.sh
+  echo "cd /app;/opt/jdk-15.0.1-full/bin/java --module-path /opt/jdk-15.0.1-full/jmods -jar iptvboss.jar -noGui" >> $HOME/appinit.sh
+  echo "cd /app;/opt/jdk-15.0.1-full/bin/java --module-path /opt/jdk-15.0.1-full/jmods -jar iptvboss.jar &" >> $HOME/appinit.sh
+  chmod +x -v $HOME/appinit.sh
+fi
+
+/usr/bin/openbox &
+$NOVNC_HOME/utils/launch.sh --vnc localhost:$VNC_PORT --listen $NOVNC_PORT &
+Xvfb $DISPLAY -screen 0 "$VNC_RESOLUTION"x"$VNC_COL_DEPTH" &
+cd /app;/opt/jdk-15.0.1-full/bin/java --module-path /opt/jdk-15.0.1-full/jmods -jar iptvboss.jar &
+x11vnc -xkb -noxrecord -noxfixes -noxdamage -permitfiletransfer -tightfilexfer -display $DISPLAY -forever -o $HOME/.x11vnc/x11vnc.log -bg && tail -f $HOME/.x11vnc/x11vnc.log
