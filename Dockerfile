@@ -55,8 +55,6 @@ RUN set -xe \
   && wget -qO- https://github.com/novnc/websockify/archive/v0.9.0.tar.gz | tar xzf - --strip 1 -C $NOVNC_HOME/utils/websockify \
   && chmod +x -v $NOVNC_HOME/utils/*.sh \
   && ln -s $NOVNC_HOME/vnc.html $NOVNC_HOME/index.html
-  
-RUN  sed -i "s/resize', 'scale'/resize', 'off'/g" $NOVNC_HOME/app/ui.js
 
 RUN echo "15 4 * * * /home/iptvboss/appinit.sh > /home/iptvboss/cron.log 2>&1"| crontab -
 
@@ -64,5 +62,6 @@ EXPOSE 5800
 VOLUME ["/app"]
 
 COPY src/run_init /usr/bin/
+COPY src/ui.js $NOVNC_HOME/app/
 
 CMD ["bash", "/usr/bin/run_init"]
