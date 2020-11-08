@@ -27,6 +27,7 @@ if [ ! -f $HOME/appinit.sh ]; then
   chmod +x -v $HOME/appinit.sh
 fi
 
+sudo cron
 $NOVNC_HOME/utils/launch.sh --vnc localhost:$VNC_PORT --listen $NOVNC_PORT &
 Xvfb $DISPLAY -screen 0 "$VNC_RESOLUTION"x"$VNC_COL_DEPTH" &
 cd /app;/opt/jdk-15.0.1-full/bin/java --module-path /opt/jdk-15.0.1-full/jmods -jar iptvboss.jar &
