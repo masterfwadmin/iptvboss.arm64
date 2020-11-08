@@ -19,6 +19,8 @@ fi
 if [ ! -f $HOME/appinit.sh ]; then
   echo "#!/bin/bash" > $HOME/appinit.sh
   echo "export DISPLAY=:0" >> $HOME/appinit.sh
+  echo "export LD_LIBRARY_PATH=/opt/jdk-15.0.1-full/lib" >> $HOME/appinit.sh
+  echo "export PATH_TO_FX=/opt/jdk-15.0.1-full/lib" >> $HOME/appinit.sh
   echo "killall java" >> $HOME/appinit.sh
   echo "cd /app;/opt/jdk-15.0.1-full/bin/java --module-path /opt/jdk-15.0.1-full/jmods -jar iptvboss.jar -noGui" >> $HOME/appinit.sh
   echo "cd /app;/opt/jdk-15.0.1-full/bin/java --module-path /opt/jdk-15.0.1-full/jmods -jar iptvboss.jar &" >> $HOME/appinit.sh
