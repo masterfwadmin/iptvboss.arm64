@@ -10,6 +10,7 @@ RUN set -xe; \
     apt-get update; \
     apt-get install -y \
       bash \
+      psmisc \
       python \
       wget \
       sudo \
